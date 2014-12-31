@@ -33,7 +33,9 @@ def displayLines(lines,stdscr,startLine,finishLine):
     stdscr.move(0,0)
     stdscr.clear()
     for i in range(startLine,finishLine):
-        stdscr.addstr(i,0,lines[i])
+        stdscr.addstr(lines[i])
+        #print lines[i]
+        #stdscr.addstr(i,0,lines[i])
         #stdscr.addstr(startLine-i,0,lines[i])
         #         cy,cx=stdscr.getyx()
         #         stdscr.move(cy+1,0)
@@ -59,7 +61,7 @@ def scrollBufferREPL(lines,stdscr):
                 currentLine -= 1
             else: # scroll display
                 if (currentLine-1 >= 0):
-                    stdscr.move(cy-1,cx)
+                    #stdscr.move(cy-1,cx)
                     currentLine -= 1
                     startLine -= 1
                     finishLine -= 1
@@ -89,7 +91,7 @@ def main(screen):
     #stdscr.printw("hello world")  # no printw in python curses
     for i in range(0,99):
         #stdscr.addstr(i + "lots of lines")
-        lines.append(str(i) + " lots of lines")
+        lines.append(str(i) + " lots of lines\n")
     #ymax,xmax = stdscr.getmaxyx()
     #displayLines(lines,stdscr,0,ymax-1)
     #stdscr.move(10,10)
