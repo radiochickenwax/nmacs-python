@@ -83,7 +83,7 @@ def scrollBufferREPL(lines,stdscr):
         displayLines(lines,stdscr,startLine,finishLine)
             
         
-def main():
+def main(screen):
     stdscr = initCurses()
     lines = [ ]
     #stdscr.printw("hello world")  # no printw in python curses
@@ -102,4 +102,4 @@ def main():
 
     curses.endwin()
 
-main()
+curses.wrapper(main)
