@@ -33,8 +33,8 @@ def displayLines(lines,stdscr,startLine,finishLine):
     stdscr.move(0,0)
     stdscr.clear()
     for i in range(startLine,finishLine):
-        #stdscr.addstr(i,0,lines[i])
         stdscr.addstr(i,0,lines[i])
+        #stdscr.addstr(startLine-i,0,lines[i])
         #         cy,cx=stdscr.getyx()
         #         stdscr.move(cy+1,0)
     stdscr.move(ty,tx)
@@ -69,14 +69,16 @@ def scrollBufferREPL(lines,stdscr):
             if (cy+1 < ymax-1): # don't scroll
                 if (cy+1 < len(lines)):
                     stdscr.move(cy+1,cx)
-                    currentLine += 1
+                    currentLine = currentLine +1
             else: # scroll display
                 if (currentLine+1 < len(lines)):
                     currentLine += 1
-                    startLine = getStartLine(lines,stdscr,currentLine)
-                    finishLine = getFinishLine(lines,stdscr,currentLine)
+                    # startLine = getStartLine(lines,stdscr,currentLine)
+                    # finishLine = getFinishLine(lines,stdscr,currentLine)
+                    startLine += 1
+                    finishLine += 1
         else: # default keypress
-            ""
+            print ""
         # finished conditionals, display lines
         displayLines(lines,stdscr,startLine,finishLine)
             
