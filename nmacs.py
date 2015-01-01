@@ -7,6 +7,7 @@ def initCurses():
     curses.noecho()
     curses.cbreak()
     stdscr.keypad(1)    
+    curses.use_default_colors()
     return stdscr
 
 def getStartLine(lines,stdscr,currentLine):
