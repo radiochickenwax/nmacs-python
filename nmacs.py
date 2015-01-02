@@ -26,6 +26,18 @@ class buffer:
         stdscr.keypad(1)    
         curses.use_default_colors()
         return stdscr
+    
+    def openFile(self):
+        del self.lines[:] # clear lines
+        self.currentLine=0
+        self.ymax,self.xmax = self.stdscr.getmaxyx()
+        self.startLine=0
+        self.finishLine=self.ymax-1
+        self.stdscr.move(0,0)
+        with open('./nmacs.py') as f:
+            for line in f:
+                self.lines.append(line)
+                
 
     def getStartLine(self):
         self.cy,self.cx = self.stdscr.getyx()
@@ -93,6 +105,8 @@ class buffer:
                         # finishLine = getFinishLine(lines,stdscr,currentLine)
                         self.startLine += 1
                         self.finishLine += 1
+            elif (key == 15): # ctrl-o: open file
+                    self.openFile()
             else: # default keypress
                 print ""
                 # finished conditionals, display lines
