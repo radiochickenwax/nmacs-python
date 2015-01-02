@@ -8,6 +8,7 @@ class buffer:
         self.stdscr = curses.initscr()
         curses.use_default_colors()
         self.lines = []
+        self.mode = "text"
         self.cy = 0
         self.cx = 0
         self.ymax, self.xmax = self.stdscr.getmaxyx()
