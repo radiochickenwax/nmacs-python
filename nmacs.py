@@ -2,107 +2,106 @@
 
 import curses
 
-def initCurses():
-    stdscr = curses.initscr()
-    curses.noecho()
-    curses.cbreak()
-    stdscr.keypad(1)    
-    curses.use_default_colors()
-    return stdscr
+class buffer:
+    def __init__(self):
+        #self.stdscr = self.initCurses()
+        self.stdscr = curses.initscr()
+        curses.use_default_colors()
+        self.lines = []
+        self.cy = 0
+        self.cx = 0
+        self.ymax, self.xmax = self.stdscr.getmaxyx()
+        self.currentLine = 0
+        self.startLine = 0
+        self.finishLine = self.ymax-1
+        for i in range(0,100):
+            self.lines.append(str(i) + " lots of lines\n")
+        self.scrollBufferREPL()
 
-def getStartLine(lines,stdscr,currentLine):
-    cy,cx = stdscr.getyx()
-    minBoundary = currentLine - cy
-    if (minBoundary >= 0):
-        returnVal = minBoundary
-    else:
-        returnVal =  0
-    return returnVal
+    def initCurses(self):
+        stdscr = curses.initscr()
+        curses.noecho()
+        curses.cbreak()
+        stdscr.keypad(1)    
+        curses.use_default_colors()
+        return stdscr
 
-def getFinishLine(lines,stdscr,currentLine):
-    cy,cx = stdscr.getyx()
-    ymax,xmax = stdscr.getmaxyx()
-    maxBoundary = currentLine + ymax - cy -1
-    if (maxBoundary < len(lines)):
-        returnVal = maxBoundary
-    else:
-        returnVal = len(lines)
-    return returnVal
+    def getStartLine(self):
+        self.cy,self.cx = self.stdscr.getyx()
+        minBoundary = self.currentLine - self.cy
+        if (minBoundary >= 0):
+            returnVal = minBoundary
+        else:
+            returnVal =  0
+        return returnVal
 
-def displayLines(lines,stdscr,startLine,finishLine):
-    ty,tx = stdscr.getyx()
-    stdscr.move(0,0)
-    stdscr.clear()
-    for i in range(startLine,finishLine):
-        stdscr.addstr(lines[i])
-        #print lines[i]
-        #stdscr.addstr(i,0,lines[i])
-        #stdscr.addstr(startLine-i,0,lines[i])
-        #         cy,cx=stdscr.getyx()
-        #         stdscr.move(cy+1,0)
-    stdscr.move(ty,tx)
-    stdscr.refresh()
+    def getFinishLine(self):
+        self.cy,self.cx = self.stdscr.getyx()
+        self.ymax,self.xmax = self.stdscr.getmaxyx()
+        maxBoundary = self.currentLine + self.ymax - self.cy -1
+        if (maxBoundary < len(self.lines)):
+            returnVal = maxBoundary
+        else:
+            returnVal = len(lines)
+        return returnVal
+            
+    def displayLines(self):
+        ty,tx = self.stdscr.getyx()
+        self.stdscr.move(0,0)
+        self.stdscr.clear()
+        for i in range(self.startLine,self.finishLine):
+            #self.stdscr.addstr(self.lines[i])
+            #self.stdscr.addstr(str(i) + "hello ")
+            line = self.lines[i]
+            for j in range(0,min(len(line), self.xmax)):
+                self.stdscr.addch(line[j])
+            #self.stdscr.addch('\n')
+        self.stdscr.move(ty,tx)
+        self.stdscr.refresh()
 
-def scrollBufferREPL(lines,stdscr):
-    startLine = 0
-    currentLine = 0
-    ymax,xmax = stdscr.getmaxyx()
-    finishLine = ymax-1
-    displayLines(lines,stdscr,startLine,finishLine)
-    stdscr.move(0,0)
-    editorRunning = True
-    while (editorRunning):
-        ymax,xmax = stdscr.getmaxyx()
-        cy,cx = stdscr.getyx()
-        key = stdscr.getch()
-        # handle key presses
-        if (key == curses.KEY_UP): 
-            if (cy-1 >= 0): # don't scroll
-                stdscr.move(cy-1,0)
-                currentLine -= 1
-            else: # scroll display
-                if (currentLine-1 >= 0):
-                    #stdscr.move(cy-1,cx)
-                    currentLine -= 1
-                    startLine -= 1
-                    finishLine -= 1
+    def scrollBufferREPL(self):
+        self.displayLines()
+        self.stdscr.move(0,0)
+        self.editorRunning = True
+        while (self.editorRunning):
+            self.ymax,self.xmax = self.stdscr.getmaxyx()
+            self.cy,self.cx = self.stdscr.getyx()
+            key = self.stdscr.getch()
+            # handle key presses
+            if (key == curses.KEY_UP): 
+                if (self.cy-1 >= 0): # don't scroll
+                    self.stdscr.move(self.cy-1,0)
+                    self.currentLine -= 1
+                else: # scroll display
+                    if (self.currentLine-1 >= 0):
+                        #stdscr.move(cy-1,cx)
+                        self.currentLine -= 1
+                        self.startLine -= 1
+                        self.finishLine -= 1
                 
-        elif (key == curses.KEY_DOWN):
-            #stdscr.move(cy+1,0)
-            if (cy+1 < ymax-1): # don't scroll
-                if (cy+1 < len(lines)):
-                    stdscr.move(cy+1,cx)
-                    currentLine = currentLine +1
-            else: # scroll display
-                if (currentLine+1 < len(lines)):
-                    currentLine += 1
-                    # startLine = getStartLine(lines,stdscr,currentLine)
-                    # finishLine = getFinishLine(lines,stdscr,currentLine)
-                    startLine += 1
-                    finishLine += 1
-        else: # default keypress
-            print ""
-        # finished conditionals, display lines
-        displayLines(lines,stdscr,startLine,finishLine)
+            elif (key == curses.KEY_DOWN):
+                #stdscr.move(cy+1,0)
+                if (self.cy+1 < self.ymax-1): # don't scroll
+                    if (self.cy+1 < len(self.lines)):
+                        self.stdscr.move(self.cy+1,self.cx)
+                        self.currentLine += 1
+                else: # scroll display
+                    if (self.currentLine+1 < len(self.lines)):
+                        self.currentLine += 1
+                        # startLine = getStartLine(lines,stdscr,currentLine)
+                        # finishLine = getFinishLine(lines,stdscr,currentLine)
+                        self.startLine += 1
+                        self.finishLine += 1
+            else: # default keypress
+                print ""
+                # finished conditionals, display lines
+            self.displayLines()
             
         
 def main(screen):
-    stdscr = initCurses()
-    lines = [ ]
-    #stdscr.printw("hello world")  # no printw in python curses
-    for i in range(0,100):
-        #stdscr.addstr(i + "lots of lines")
-        lines.append(str(i) + " lots of lines\n")
-    #ymax,xmax = stdscr.getmaxyx()
-    #displayLines(lines,stdscr,0,ymax-1)
-    #stdscr.move(10,10)
-    #stdscr.refresh()
+    this_buffer = buffer()
 
-    # start repl here
-    #keypress = stdscr.getch()
-    scrollBufferREPL(lines,stdscr)
-    
+#     curses.endwin()
 
-    curses.endwin()
-
-curses.wrapper(main)
+if __name__ == '__main__':
+    curses.wrapper(main)
