@@ -1,7 +1,7 @@
-* bugs [0/6]
+* bugs [0/9]
 1. [ ] need to read keybindings from a file somehow
 2. [ ] need to implement horizontal scrolling
-   - nmacs.py text mode segfaults if chars are added past xmax
+   - (RESOLVED) nmacs.py text mode segfaults if chars are added past xmax
 3. [ ] can't browse directories yet
 4. [ ] can't save files yet
 5. [ ] no menu yet
