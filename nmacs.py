@@ -19,8 +19,9 @@ class buffer:
         self.ystartLine = 0
         self.yfinishLine = self.ymax-1
 
-        self.xstartLine = 0
-        self.xfinishLine = self.xmax-1
+        self.currentCol = 0
+        self.xstartCol = 0
+        self.xfinishCol = self.xmax-1
 
         for i in range(0,100):
             self.lines.append(str(i) + " lots of lines\n")
@@ -73,7 +74,7 @@ class buffer:
             #self.stdscr.addstr(self.lines[i])
             #self.stdscr.addstr(str(i) + "hello ")
             line = self.lines[i]
-            for j in range(self.xstartLine,min(len(line), self.xfinishLine)):
+            for j in range(self.xstartCol,min(len(line), self.xfinishCol)):
                 self.stdscr.addch(line[j])
             #self.stdscr.addch('\n')
         self.stdscr.move(ty,tx)
@@ -124,9 +125,11 @@ class buffer:
                     if (len(self.lines[self.currentLine]) < self.xmax): # don't scroll
                         self.stdscr.move(self.cy,self.cx+1)
                     else: # scroll x direction
-                        self.xstartLine += 1
-                        self.xfinishLine += 1
+                        self.xstartCol += 1
+                        self.xfinishCol += 1
+
             elif (key == curses.KEY_LEFT):
+                
                 if(self.cx-1 >= 0):
                     self.stdscr.move(self.cy,self.cx-1)
 
