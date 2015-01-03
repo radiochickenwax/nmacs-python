@@ -130,12 +130,13 @@ class buffer:
                 self.stdscr.move(self.cy,self.cx-1)
 
             else: # default keypress (lineGap)
-                before = self.lines[self.currentLine][:self.cx] + chr(key)
-                after = self.lines[self.currentLine][self.cx:]
-                self.lines[self.currentLine] = before + after
-                # note the following doesn't check window x-length.
-                # which really means gotta implement horiz scrolling
-                self.stdscr.move(self.cy,self.cx+1)
+                if (cx+1 < self.xmax):
+                    before = self.lines[self.currentLine][:self.cx] + chr(key)
+                    after = self.lines[self.currentLine][self.cx:]
+                    self.lines[self.currentLine] = before + after
+                    # note the following doesn't check window x-length.
+                    # which really means gotta implement horiz scrolling
+                    self.stdscr.move(self.cy,self.cx+1)
 
             # finished conditionals, display lines
             self.displayLines()
