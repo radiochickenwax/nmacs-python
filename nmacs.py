@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import curses
+import os
 
 class buffer:
     def __init__(self):
@@ -83,7 +84,7 @@ class buffer:
             # handle key presses
             if (key == curses.KEY_UP): 
                 if (self.cy-1 >= 0): # don't scroll
-                    self.stdscr.move(self.cy-1,0)
+                    self.stdscr.move(self.cy-1,self.cx)
                     self.currentLine -= 1
                 else: # scroll display
                     if (self.currentLine-1 >= 0):
@@ -107,6 +108,12 @@ class buffer:
                         self.finishLine += 1
             elif (key == 15): # ctrl-o: open file
                     self.openFile()
+            elif (key == curses.KEY_RIGHT):
+                if (self.cx+1 < len(self.lines[self.currentLine])):
+                    self.stdscr.move(self.cy,self.cx+1)
+            elif (key == curses.KEY_LEFT):
+                if(self.cx-1 >= 0):
+                    self.stdscr.move(self.cy,self.cx-1)
             else: # default keypress
                 print ""
                 # finished conditionals, display lines
