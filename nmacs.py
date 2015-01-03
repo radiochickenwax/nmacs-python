@@ -13,9 +13,15 @@ class buffer:
         self.cy = 0
         self.cx = 0
         self.ymax, self.xmax = self.stdscr.getmaxyx()
+
         self.currentLine = 0
-        self.startLine = 0
-        self.finishLine = self.ymax-1
+
+        self.ystartLine = 0
+        self.yfinishLine = self.ymax-1
+
+        self.xstartLine = 0
+        self.xfinishLine = self.xmax-1
+
         for i in range(0,100):
             self.lines.append(str(i) + " lots of lines\n")
         self.scrollBufferREPL()
@@ -32,8 +38,8 @@ class buffer:
         del self.lines[:] # clear lines
         self.currentLine=0
         self.ymax,self.xmax = self.stdscr.getmaxyx()
-        self.startLine=0
-        self.finishLine=self.ymax-1
+        self.ystartLine=0
+        self.yfinishLine=self.ymax-1
         self.stdscr.move(0,0)
         with open('./nmacs.py') as f:
             for line in f:
@@ -63,7 +69,7 @@ class buffer:
         ty,tx = self.stdscr.getyx()
         self.stdscr.move(0,0)
         self.stdscr.clear()
-        for i in range(self.startLine,self.finishLine):
+        for i in range(self.ystartLine,self.yfinishLine):
             #self.stdscr.addstr(self.lines[i])
             #self.stdscr.addstr(str(i) + "hello ")
             line = self.lines[i]
@@ -93,8 +99,8 @@ class buffer:
                     if (self.currentLine-1 >= 0):
                         #stdscr.move(cy-1,cx)
                         self.currentLine -= 1
-                        self.startLine -= 1
-                        self.finishLine -= 1
+                        self.ystartLine -= 1
+                        self.yfinishLine -= 1
                 
             elif (key == curses.KEY_DOWN):
                 #stdscr.move(cy+1,0)
@@ -105,10 +111,10 @@ class buffer:
                 else: # scroll display
                     if (self.currentLine+1 < len(self.lines)):
                         self.currentLine += 1
-                        # startLine = getStartLine(lines,stdscr,currentLine)
-                        # finishLine = getFinishLine(lines,stdscr,currentLine)
-                        self.startLine += 1
-                        self.finishLine += 1
+                        # ystartLine = getStartLine(lines,stdscr,currentLine)
+                        # yfinishLine = getFinishLine(lines,stdscr,currentLine)
+                        self.ystartLine += 1
+                        self.yfinishLine += 1
 
             elif (key == 15): # ctrl-o: open file
                     self.openFile()
