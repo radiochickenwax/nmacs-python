@@ -73,7 +73,7 @@ class buffer:
             #self.stdscr.addstr(self.lines[i])
             #self.stdscr.addstr(str(i) + "hello ")
             line = self.lines[i]
-            for j in range(0,min(len(line), self.xmax)):
+            for j in range(self.xstartLine,min(len(line), self.xfinishLine)):
                 self.stdscr.addch(line[j])
             #self.stdscr.addch('\n')
         self.stdscr.move(ty,tx)
