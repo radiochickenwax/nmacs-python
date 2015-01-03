@@ -130,7 +130,7 @@ class buffer:
                 self.stdscr.move(self.cy,self.cx-1)
 
             else: # default keypress (lineGap)
-                if (cx+1 < self.xmax):
+                if (self.cx+1 < self.xmax):
                     before = self.lines[self.currentLine][:self.cx] + chr(key)
                     after = self.lines[self.currentLine][self.cx:]
                     self.lines[self.currentLine] = before + after

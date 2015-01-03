@@ -1,7 +1,11 @@
-* bugs [0/5]
+* bugs [0/6]
 1. [ ] need to read keybindings from a file somehow
 2. [ ] need to implement horizontal scrolling
    - nmacs.py text mode segfaults if chars are added past xmax
 3. [ ] can't browse directories yet
 4. [ ] can't save files yet
 5. [ ] no menu yet
+6. [ ] no mark, point or region yet
+7. [ ] no copy paste yet
+8. [ ] need to catch ctrl-c signal
+9. [ ] untested on MSwindows still
