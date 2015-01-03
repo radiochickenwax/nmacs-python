@@ -77,11 +77,14 @@ class buffer:
         self.displayLines()
         self.stdscr.move(0,0)
         self.editorRunning = True
+
         while (self.editorRunning):
+
             self.ymax,self.xmax = self.stdscr.getmaxyx()
             self.cy,self.cx = self.stdscr.getyx()
             key = self.stdscr.getch()
             # handle key presses
+
             if (key == curses.KEY_UP): 
                 if (self.cy-1 >= 0): # don't scroll
                     self.stdscr.move(self.cy-1,self.cx)
@@ -106,14 +109,18 @@ class buffer:
                         # finishLine = getFinishLine(lines,stdscr,currentLine)
                         self.startLine += 1
                         self.finishLine += 1
+
             elif (key == 15): # ctrl-o: open file
                     self.openFile()
+
             elif (key == curses.KEY_RIGHT):
                 if (self.cx+1 < len(self.lines[self.currentLine])):
                     self.stdscr.move(self.cy,self.cx+1)
+
             elif (key == curses.KEY_LEFT):
                 if(self.cx-1 >= 0):
                     self.stdscr.move(self.cy,self.cx-1)
+
             elif (key == curses.KEY_BACKSPACE):
                 before = self.lines[self.currentLine][:self.cx-1]
                 after = self.lines[self.currentLine][self.cx:]
@@ -121,6 +128,7 @@ class buffer:
                 # note the following doesn't check window x-length.
                 # which really means gotta implement horiz scrolling
                 self.stdscr.move(self.cy,self.cx-1)
+
             else: # default keypress (lineGap)
                 before = self.lines[self.currentLine][:self.cx] + chr(key)
                 after = self.lines[self.currentLine][self.cx:]
@@ -128,7 +136,8 @@ class buffer:
                 # note the following doesn't check window x-length.
                 # which really means gotta implement horiz scrolling
                 self.stdscr.move(self.cy,self.cx+1)
-                # finished conditionals, display lines
+
+            # finished conditionals, display lines
             self.displayLines()
             
         
