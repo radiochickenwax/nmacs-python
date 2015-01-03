@@ -121,14 +121,17 @@ class buffer:
                     self.openFile()
 
             elif (key == curses.KEY_RIGHT):
-                if (self.cx+1 < len(self.lines[self.currentLine])):
-                    if (len(self.lines[self.currentLine]) < self.xmax): # don't scroll
+                if (len(self.lines[self.currentLine]) < self.xmax-1): # don't consider scrolling 
+                    if (self.cx+1 < len(self.lines[self.currentLine])):
                         self.stdscr.move(self.cy,self.cx+1)
-                    else: # scroll x direction
+                else: # consider scroll x direction
+                    if (self.cx+1 < self.xmax):
+                        self.stdscr.move(self.cy,self.cx+1)
+                    else:
                         self.xstartCol += 1
                         self.xfinishCol += 1
 
-            elif (key == curses.KEY_LEFT):
+            elif (key == curses.KEY_LEFT):                
                 
                 if(self.cx-1 >= 0):
                     self.stdscr.move(self.cy,self.cx-1)
