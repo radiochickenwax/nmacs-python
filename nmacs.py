@@ -121,8 +121,11 @@ class buffer:
 
             elif (key == curses.KEY_RIGHT):
                 if (self.cx+1 < len(self.lines[self.currentLine])):
-                    self.stdscr.move(self.cy,self.cx+1)
-
+                    if (len(self.lines[self.currentLine]) < self.xmax): # don't scroll
+                        self.stdscr.move(self.cy,self.cx+1)
+                    else: # scroll x direction
+                        self.xstartLine += 1
+                        self.xfinishLine += 1
             elif (key == curses.KEY_LEFT):
                 if(self.cx-1 >= 0):
                     self.stdscr.move(self.cy,self.cx-1)
