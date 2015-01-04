@@ -91,6 +91,13 @@ class buffer:
         self.stdscr.attron(curses.A_REVERSE)
         statString = "cx:" + str(self.cx )
         statString += ",cy:" + str(self.cy)
+        statString += ",cl:" + str(self.currentLine)
+        statString += ",sl:" + str(self.ystartLine)
+        statString += ",fl:" + str(self.yfinishLine)
+        statString += ",cc:" + str(self.currentCol)
+        statString += ",sx:" + str(self.xstartCol)
+        statString += ",fx:" + str(self.xfinishCol)
+
         self.stdscr.addstr(statString)
         self.stdscr.attroff(curses.A_BOLD)
         self.stdscr.attroff(curses.A_REVERSE)
