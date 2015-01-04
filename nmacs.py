@@ -94,10 +94,11 @@ class buffer:
         statString += ",cl:" + str(self.currentLine)
         statString += ",sl:" + str(self.ystartLine)
         statString += ",fl:" + str(self.yfinishLine)
+        statString += ",lines:" + str(len(self.lines))
         statString += ",cc:" + str(self.currentCol)
         statString += ",sx:" + str(self.xstartCol)
         statString += ",fx:" + str(self.xfinishCol)
-
+        statString += ",cols:" + str(self.yfinishLine)
         self.stdscr.addstr(statString)
         self.stdscr.attroff(curses.A_BOLD)
         self.stdscr.attroff(curses.A_REVERSE)
@@ -161,6 +162,7 @@ class buffer:
                 
                 if(self.cx-1 >= 0): # don't scroll
                     self.stdscr.move(self.cy,self.cx-1)
+                    self.currentCol -= 1
                 else: # consider scrolling
                     if (self.xstartCol-1 > 0):
                         self.currentCol -= 1
@@ -175,6 +177,7 @@ class buffer:
                 # note the following doesn't check window x-length.
                 # which really means gotta implement horiz scrolling
                 self.stdscr.move(self.cy,self.cx-1)
+                self.currentCol -= 1
 
             else: # default keypress (lineGap)
                 if (self.cx+1 < self.xmax):
