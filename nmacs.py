@@ -79,6 +79,22 @@ class buffer:
             #self.stdscr.addch('\n')
         self.stdscr.move(ty,tx)
         self.stdscr.refresh()
+    
+    def stats(self):
+        lineNumber = self.currentLine + 1
+        ty,tx = self.stdscr.getyx()
+        self.cy,self.cx = ty,tx
+        self.ymax,self.xmax =  self.stdscr.getmaxyx()
+        self.stdscr.move(self.ymax-1,0)
+        self.stdscr.clrtoeol()
+        self.stdscr.attron(curses.A_BOLD)
+        self.stdscr.attron(curses.A_REVERSE)
+        statString = "cx:" + str(self.cx )
+        statString += ",cy:" + str(self.cy)
+        self.stdscr.addstr(statString)
+        self.stdscr.attroff(curses.A_BOLD)
+        self.stdscr.attroff(curses.A_REVERSE)
+        self.stdscr.move(ty,tx)
 
     def scrollBufferREPL(self):
         self.displayLines()
@@ -165,6 +181,7 @@ class buffer:
 
             # finished conditionals, display lines
             self.displayLines()
+            self.stats()
             
         
 def main(screen):
