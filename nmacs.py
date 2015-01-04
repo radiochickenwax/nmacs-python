@@ -71,12 +71,9 @@ class buffer:
         self.stdscr.move(0,0)
         self.stdscr.clear()
         for i in range(self.ystartLine,self.yfinishLine):
-            #self.stdscr.addstr(self.lines[i])
-            #self.stdscr.addstr(str(i) + "hello ")
             line = self.lines[i]
             for j in range(self.xstartCol,min(len(line), self.xfinishCol)):
                 self.stdscr.addch(line[j])
-            #self.stdscr.addch('\n')
         self.stdscr.move(ty,tx)
         self.stdscr.refresh()
     
