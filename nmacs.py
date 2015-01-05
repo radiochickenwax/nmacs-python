@@ -126,11 +126,13 @@ class buffer:
                 
             elif (key == curses.KEY_DOWN):
                 #stdscr.move(cy+1,0)
-                if (self.cy+1 < self.ymax-1): # don't scroll
+                if (self.cy+1 < self.ymax-1): # don't y-scroll down
                     if (self.cy+1 < len(self.lines)):
-                        self.stdscr.move(self.cy+1,self.cx)
-                        self.currentLine += 1
-                else: # scroll display
+                        if (self.currentCol <
+                            len(self.lines[self.currentLine+1])):
+                            self.stdscr.move(self.cy+1,self.cx)
+                            self.currentLine += 1
+                else: # y-scroll down
                     if (self.currentLine+1 < len(self.lines)):
                         self.currentLine += 1
                         # ystartLine = getStartLine(lines,stdscr,currentLine)
