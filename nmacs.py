@@ -163,7 +163,7 @@ class buffer:
                     self.stdscr.move(self.cy,self.cx-1)
                     self.currentCol -= 1
                 else: # consider scrolling
-                    if (self.xstartCol-1 > 0):
+                    if (self.xstartCol-1 >= 0):
                         self.currentCol -= 1
                         self.xstartCol -= 1
                         self.xfinishCol -= 1
