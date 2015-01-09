@@ -92,6 +92,7 @@ class buffer:
         statString += ",sl:" + str(self.ystartLine)
         statString += ",fl:" + str(self.yfinishLine)
         statString += ",lines:" + str(len(self.lines))
+        statString += ",ll:" + str(len(self.lines[self.currentLine]))
         statString += ",cc:" + str(self.currentCol)
         statString += ",sx:" + str(self.xstartCol)
         statString += ",fx:" + str(self.xfinishCol)
