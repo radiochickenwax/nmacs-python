@@ -179,6 +179,9 @@ class buffer:
                 self.stdscr.move(self.cy,self.cx-1)
                 self.currentCol -= 1
 
+            elif (key == 10 ): #curses.KEY_ENTER):
+                ""
+
             else: # default keypress (lineGap)
                 if (self.cx+1 < self.xmax):
                     before = self.lines[self.currentLine][:self.cx] + chr(key)
