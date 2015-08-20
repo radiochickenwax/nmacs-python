@@ -180,7 +180,10 @@ class buffer:
                 self.currentCol -= 1
 
             elif (key == 10 ): #curses.KEY_ENTER):
-                ""
+                before = self.lines[self.currentLine][:self.cx-1]
+                after = self.lines[self.currentLine][self.cx:]
+                before += '\n'
+                
 
             else: # default keypress (lineGap)
                 if (self.cx+1 < self.xmax):

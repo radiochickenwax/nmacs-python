@@ -1,7 +1,7 @@
 About
 =====
 
-nmacs-python is an attempt to build a minimalistic hackable text editor in python using ncurses.
+nmacs-python is an attempt to build a minimalistic hackable text editor in python using ncurses.  It is also a rewrite of the C++ program [nmacs](http://github.com/radiochickenwax/nmacs). 
 
 
 Progress Log
